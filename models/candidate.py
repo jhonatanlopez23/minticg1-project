@@ -18,4 +18,3 @@ class Candidate(Abstract):
         self.email=email
         self.political_party=political_party
         self.number_political_party=number_political_party
-        
