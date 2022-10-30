@@ -1,6 +1,7 @@
 from models.abstract import Abstract
 
 class Candidate(Abstract):
+    COLLECTION_NAME = "candidates"
     _id: None
     identification:None
     first_name:None
@@ -9,7 +10,7 @@ class Candidate(Abstract):
     political_party:None
     number_political_party:None
 
-    def __init__(self, _id, identification, first_name, last_name, email, political_party, number_political_party):
+    def __init__(self, identification, first_name, last_name, email, political_party, number_political_party, _id=None):
         
         super().__init__(_id)
         self.identification=identification
