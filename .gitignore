@@ -1,3 +1,15 @@
 venv/
 .idea/
 __pycache__/
+controllers/abstract.py
+controllers/candidates.py
+controllers/party.py
+models/abstract.py
+models/candidates.py
+models/party.py
+repositories/__init__.py
+repositories/abstract.py
+repositories/candidates.py
+repositories/party.py
+views/__init__.py
+views/party.py
