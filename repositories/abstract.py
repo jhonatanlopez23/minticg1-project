@@ -6,8 +6,8 @@ from pymongo import MongoClient
 
 from models.abstract import AbstractModel, ElementDoesNotExist
 
-Connection_DB = "mongodb+srv://Grupo1:ciclo4agrupo1@cluster0votaciones.5zcanbk.mongodb.net/?retryWrites=true&w=majority"
-DATABASE_NAME = "grupo1"
+Connection_DB = "mongodb+srv://minticg01:grupo012022@clusterg1misiontic2022.4ohez2p.mongodb.net/?retryWrites=true&w=majority"
+DATABASE_NAME = "votes"
 
 class AbstractRepository(ABC):
     def __init__(self, model: Type[AbstractModel], does_not_exist: Type[ElementDoesNotExist]):
