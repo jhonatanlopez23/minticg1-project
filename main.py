@@ -13,6 +13,7 @@ def ping():
 
 
 app.register_blueprint(party_bp, url_prefix="/party")
+app.register_blueprint(party_bp, url_prefix="/candidate")
 
 
 if __name__ == "__main__":
