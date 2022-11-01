@@ -8,7 +8,7 @@ class Candidate(AbstractModel):
     first_name = None
     last_name = None
     email = None
-    resolution_number=None
+    resolution_number = None
 
     def __init__(
             self,
@@ -24,7 +24,7 @@ class Candidate(AbstractModel):
         self.last_name = last_name
         self.first_name = first_name
         self.email = email
-        self.resolution_number=resolution_number
+        self.resolution_number = resolution_number
 
     def prepare_to_save(self):
         return {
@@ -48,7 +48,7 @@ class Candidate(AbstractModel):
             last_name=doc["last_name"],
             first_name=doc["first_name"],
             email=doc["email"],
-            resolution_number=doc["resolution_number"]
+            resolution_number=doc["resolution_number"],
             _id=str(doc["_id"]) if doc.get("_id") else None,
         )
 
