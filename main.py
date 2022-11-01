@@ -15,10 +15,10 @@ def ping():
     })
 
 
-app.register_blueprint(party_bp, url_prefix="/party")
-app.register_blueprint(candidates_bp, url_prefix="/candidate")
-app.register_blueprint(tables_bp, url_prefix="/table")
-app.register_blueprint(results_bp, url_prefix="/result")
+app.register_blueprint(party_bp, url_prefix="/partys")
+app.register_blueprint(candidates_bp, url_prefix="/candidates")
+app.register_blueprint(tables_bp, url_prefix="/tables")
+app.register_blueprint(results_bp, url_prefix="/results")
 
 
 if __name__ == "__main__":
