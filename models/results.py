@@ -9,8 +9,8 @@ class Results(AbstractModel):
     COLLECTION_NAME = "results"
 
     number_votes: int = None
-    candidate: Candidate = None
     table: Tables = None
+    candidate: Candidate = None
 
     def __init__(self,
                  number_votes,
@@ -19,41 +19,44 @@ class Results(AbstractModel):
                  _id=None):
         super().__init__(_id)
         self.number_votes = number_votes
-        self.candidate = candidate
         self.table = table
+        self.candidate = candidate
 
     def prepare_to_save(self):
         print("")
         return {
             "number_votes": self.number_votes,
+            "table": DBRef(
+                id=ObjectId(self.table._id),
+                collection=Tables.COLLECTION_NAME
+            ),
             "candidate": DBRef(
                 id=ObjectId(self.candidate._id),
                 collection=Candidate.COLLECTION_NAME
             ),
-            "table": DBRef(
-                id=ObjectId(self.table._id),
-                collection=Tables.COLLECTION_NAME
-            )
+
         }
 
     def to_json(self):
         return {
             "_id": self._id,
             "number_votes": self.number_votes,
+            "table": self.table.to_json(),
             "candidate": self.candidate.to_json(),
-            "table": self.table.to_json()
+
         }
 
     @staticmethod
     def create(doc):
-        assert doc.get("candidate")
         assert doc.get("table")
-        candidate = Candidate.create(doc.get("candidate"))
+        assert doc.get("candidate")
         table = Tables.create(doc.get("table"))
+        candidate = Candidate.create(doc.get("candidate"))
         return Results(
             number_votes=doc.get("number_votes"),
+            table=table,
             candidate=candidate,
-            table=table
+
         )
 
 

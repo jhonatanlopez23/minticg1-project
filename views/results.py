@@ -23,7 +23,7 @@ def create():
         return jsonify(results.to_json())
     except TableDoesNotExist:
         return jsonify({
-            "message": f"la mesa con id:... no existe"
+            "message": f"la mesa no existe"
         }), 400
     except CandidateDoesNotExist:
         return jsonify({

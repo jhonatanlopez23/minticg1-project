@@ -32,24 +32,11 @@ class ResultsController(CRUDController):
         return self.repository.get_by_id(id_element)
 
     def create(self, content):
-        """
-        {
-            "grade": 5,
-            "semester": "II",
-            "year": 2022,
-            "subject": {
-                "id": "...",
-            },
-            "student": {
-                "id": "...",
-            }
-        }
-        """
-        doc_tables = content.get("tables", {})
-        doc_candidates = content.get("candidates", {})
-        content["tables"] = self.r_table.get_by_id(
+        doc_tables = content.get("table", {})
+        doc_candidates = content.get("candidate", {})
+        content["table"] = self.r_table.get_by_id(
             doc_tables.get("id")).to_json()
-        content["candidates"] = self.r_candidate.get_by_id(
+        content["candidate"] = self.r_candidate.get_by_id(
             doc_candidates.get("id")).to_json()
         return self.repository.save(
             item=Results.create(content)

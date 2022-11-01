@@ -9,6 +9,7 @@ from models.abstract import AbstractModel, ElementDoesNotExist
 Connection_DB = "mongodb+srv://minticg01:grupo012022@clusterg1misiontic2022.4ohez2p.mongodb.net/?retryWrites=true&w=majority"
 DATABASE_NAME = "votes"
 
+
 class AbstractRepository(ABC):
     def __init__(self, model: Type[AbstractModel], does_not_exist: Type[ElementDoesNotExist]):
         self._client = MongoClient(Connection_DB)
@@ -25,12 +26,11 @@ class AbstractRepository(ABC):
             item._id = str(inserted.inserted_id)
         else:
             self.collection.update_one({
-                "_id":ObjectId(item._id)
+                "_id": ObjectId(item._id)
             }, {
-                "$set":item. prepare_to_save()
+                "$set": item. prepare_to_save()
             })
         return item
-
 
     def delete(self, item: AbstractModel):
         response = self.collection.delete_one({
@@ -59,7 +59,6 @@ class AbstractRepository(ABC):
     def count(self):
         return self.collection.count_documents({})
 
-
     def _fill_db_ref(self, doc):
         for key, value in doc.items():
             if value and isinstance(value, DBRef):
@@ -68,6 +67,5 @@ class AbstractRepository(ABC):
                     "_id": value.id
                 })
                 doc[key] = doc_related
-
-
-
+                if doc_related and isinstance(doc_related, dict):
+                    self._fill_db_ref(doc_related)
