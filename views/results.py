@@ -66,3 +66,4 @@ def delete(id_result):
         return jsonify({
             "message": "resultado no existe"
         })
+    

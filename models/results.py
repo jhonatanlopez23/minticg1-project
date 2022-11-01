@@ -56,6 +56,7 @@ class Results(AbstractModel):
             number_votes=doc.get("number_votes"),
             table=table,
             candidate=candidate,
+            _id=str(doc["_id"]) if doc.get("_id") else None
 
         )
 
