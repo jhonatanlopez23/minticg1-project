@@ -1,26 +1,25 @@
 from flask import jsonify, request, Blueprint
 
-from controllers.candidate import candidatesController
-from models.candidate import CandidateDoesNotExist
 
-candidates_controller = candidatesController()
+from controllers.candidates import CandidatesController
+from models.party import PartyDoesNotExist
+from models.candidates import CandidateDoesNotExist
 
-candidates_bp = Blueprint("candidates_blueprint", __name__)
+candidates_controller = CandidatesController()
+
+candidates_bp = Blueprint("candidates_bp", __name__)
 
 
 @candidates_bp.route("/", methods=["GET"])
-def candidates():
-    list_candidates = []
-    for candidate in candidates_controller.get_all():
-        list_candidates.append(candidate.__dict__)
+def get_all():
+
     return jsonify({
-        "candidates": list_candidates,
-        "count": candidates_controller.count()
+        "candidates": [item.to_json() for item in candidates_controller.get_all()]
     })
 
 
 @candidates_bp.route("/<string:id_candidate>", methods=["GET"])
-def get_candidate_by_id(id_candidate):
+def get_by_id(id_candidate):
     try:
         candidate = candidates_controller.get_by_id(id_candidate)
     except CandidateDoesNotExist:
@@ -32,16 +31,16 @@ def get_candidate_by_id(id_candidate):
 
 
 @candidates_bp.route("/", methods=["POST"])
-def create_candidate():
-    candidate = candidates_controller.create(request.get_json())
+def create():
+    body = request.get_json()
+    candidate = candidates_controller.create(body)
     return jsonify({
-        "message": "candidato fue creado de forma exitosa",
-        "candidate": candidate.__dict__
-    }), 201
+        "candidate": candidate.to_json()
+    })
 
 
 @candidates_bp.route("/<string:id_candidate>", methods=["PUT"])
-def update_candidate(id_candidate):
+def update(id_candidate):
     try:
         candidate = candidates_controller.update(
             id_candidate,
@@ -58,7 +57,7 @@ def update_candidate(id_candidate):
 
 
 @candidates_bp.route("/<string:id_candidate>", methods=["DELETE"])
-def delete_candidate(id_candidate):
+def delete(id_candidate):
     try:
         result = candidates_controller.delete(id_candidate)
     except CandidateDoesNotExist:

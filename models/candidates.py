@@ -13,13 +13,13 @@ class Candidate(AbstractModel):
     identification = None
     party: Party = None
 
-    def __init__(self, resolution_number, names, last_names, identification, partty=None, _id=None):
+    def __init__(self, resolution_number, names, last_names, identification, party=None, _id=None):
         super().__init__(_id)
         self.resolution_number = resolution_number
         self.names = names
         self.last_names = last_names
         self.identification = identification
-        self.party = partty
+        self.party = party
 
     def prepare_to_save(self):
         party_db_ref = None
@@ -59,7 +59,7 @@ class Candidate(AbstractModel):
             names=doc["names"],
             last_names=doc["last_names"],
             identification=doc["identification"],
-            partty=party,
+            party=party,
             _id=str(doc["_id"]) if doc.get("_id") else None,
         )
 
